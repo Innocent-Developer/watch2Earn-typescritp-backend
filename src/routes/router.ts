@@ -8,11 +8,13 @@ import { approveWithdrawal } from '../admin/withDrawls.approve';
 import { teamShow } from '../team/teamShow';
 import { approveDeposit } from '../admin/ApprovDeposit';
 import { changePassword } from '../account/ChangePassword';
-import { createAd } from '../admin/createAds';
+import { createAd } from '../Ads/createAd';
 import { getUserWithdrawalsByUid } from '../Withdrawal Request/getRequest';
 import { getAllDeposits, getDepositStats } from '../admin/getAllDeposits';
 import { getUserByUid, getUsersByUids, searchUsers } from '../admin/getUserByUid';
 import { getAllWithdrawals, getWithdrawalStats, getWithdrawalsByEmail, searchWithdrawals } from '../admin/getAllWithdrawals';
+import { getAllAds } from '../Ads/getAllAds';
+import { getAllUsers, deleteUser } from '../admin/getAllUsers';
 
 const router = Router();
 
@@ -46,6 +48,9 @@ router.post('/change-password', changePassword);
 // Create ad route
 router.post('/admin/create-ad', createAd);
 
+// Get all ads route
+router.get('/ads', getAllAds);
+
 // Get user withdrawals by UID
 router.get('/withdrawals/:uid', getUserWithdrawalsByUid);
 
@@ -75,5 +80,11 @@ router.get('/admin/withdrawals/user/:email', getWithdrawalsByEmail);
 
 // Admin search withdrawal requests
 router.get('/admin/withdrawals/search', searchWithdrawals);
+
+// Admin get all users route
+router.get('/admin/users', getAllUsers);
+
+// Admin delete user route
+router.delete('/admin/users/:uid', deleteUser);
 
 export default router;

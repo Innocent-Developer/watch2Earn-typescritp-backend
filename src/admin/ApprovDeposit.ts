@@ -18,15 +18,19 @@ export const approveDeposit = async (req: Request, res: Response) => {
       return res.status(404).json({ message: 'User not found.' });
     }
 
-    // Change user's plan to 'pro'
+    // Change user's plan to 'pro' and add deposit amount to total balance
     user.plan = 'pro';
+    user.totalBalance = (user.totalBalance || 0) + Number(deposit.amount);
     await user.save();
 
-    // Optionally, mark deposit as approved (add a status field in schema if needed)
+    // Mark deposit as approved
     deposit.status = 'approved';
     await deposit.save();
 
-    res.status(200).json({ message: 'Deposit approved and user plan updated to pro.' });
+    res.status(200).json({ 
+      message: 'Deposit approved, user plan updated to pro, and balance updated.',
+      updatedBalance: user.totalBalance
+    });
   } catch (error: any) {
     res.status(500).json({ message: 'Failed to approve deposit', error: error.message });
   }

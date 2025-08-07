@@ -1,22 +1,20 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IAd extends Document {
-  adId: string;
   name: string;
   videoUrl?: string;
-  imageUrl?: string;
+  imageUrl?: string; 
   link: string;
-  duration: number; // in seconds
-  createdAt?: Date;
+  durationInSeconds: number;
 }
 
-const AdsSchema: Schema = new Schema({
-  adId: { type: String, required: true, unique: true },
+const AdSchema: Schema = new Schema({
   name: { type: String, required: true },
   videoUrl: { type: String },
   imageUrl: { type: String },
   link: { type: String, required: true },
-  duration: { type: Number, required: true }, // duration in seconds
+  durationInSeconds: { type: Number, required: true }
 }, { timestamps: true });
 
-export default mongoose.model<IAd>('Ad', AdsSchema);
+const AdModel = mongoose.model<IAd>('Ad', AdSchema);
+export default AdModel;
