@@ -13,7 +13,7 @@ import { getUserWithdrawalsByUid } from '../Withdrawal Request/getRequest';
 import { getAllDeposits, getDepositStats } from '../admin/getAllDeposits';
 import { getUserByUid, getUsersByUids, searchUsers } from '../admin/getUserByUid';
 import { getAllWithdrawals, getWithdrawalStats, getWithdrawalsByEmail, searchWithdrawals } from '../admin/getAllWithdrawals';
-import { getAllAds } from '../Ads/getAllAds';
+import { getAllAds, getAdStats, getAdById } from '../Ads/getAllAds';
 import { getAllUsers, deleteUser } from '../admin/getAllUsers';
 
 const router = Router();
@@ -51,6 +51,12 @@ router.post('/admin/create-ad', createAd);
 // Get all ads route
 router.get('/ads', getAllAds);
 
+// Get ad statistics
+router.get('/ads/stats', getAdStats);
+
+// Get ad by ID
+router.get('/ads/:adId', getAdById);
+
 // Get user withdrawals by UID
 router.get('/withdrawals/:uid', getUserWithdrawalsByUid);
 
@@ -64,7 +70,7 @@ router.get('/admin/deposits/stats', getDepositStats);
 router.get('/admin/user/:uid', getUserByUid);
 
 // Admin get multiple users by UIDs
-router.get('/admin/users', getUsersByUids);
+router.get('/admin/users/by-uids', getUsersByUids);
 
 // Admin search users
 router.get('/admin/users/search', searchUsers);

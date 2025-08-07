@@ -92,8 +92,10 @@ It provides APIs for user management, deposits, withdrawals, admin actions, ads,
 | Method | Endpoint                               | Description                        |
 |--------|----------------------------------------|------------------------------------|
 | GET    | `/api/admin/user/:uid`                 | Get user by UID (admin)            |
-| GET    | `/api/admin/users`                     | Get multiple users by UIDs         |
+| GET    | `/api/admin/users`                     | Get all users (admin)              |
+| GET    | `/api/admin/users/by-uids`             | Get multiple users by UIDs         |
 | GET    | `/api/admin/users/search`              | Search users (admin)               |
+| DELETE | `/api/admin/users/:uid`                | Delete user (admin)                |
 
 ### Admin Management
 
@@ -101,6 +103,14 @@ It provides APIs for user management, deposits, withdrawals, admin actions, ads,
 |--------|----------------------------------------|------------------------------------|
 | POST   | `/api/admin/account`                   | Add admin bank account             |
 | POST   | `/api/admin/create-ad`                 | Create ad (admin)                  |
+
+### Ad Management
+
+| Method | Endpoint                               | Description                        |
+|--------|----------------------------------------|------------------------------------|
+| GET    | `/api/ads`                             | Get all ads                        |
+| GET    | `/api/ads/stats`                       | Get ad statistics                  |
+| GET    | `/api/ads/:adId`                       | Get ad by ID                       |
 
 ### Team Management
 
@@ -241,6 +251,33 @@ GET /api/admin/users/search?page=1&limit=20&search=john&plan=pro&level=2&sortBy=
 - `sortBy` (default: createdAt) - Field to sort by
 - `sortOrder` (default: desc) - Sort order
 
+### Ad Management
+
+#### Get All Ads
+```http
+GET /api/ads?page=1&limit=10&type=video&minDuration=30&maxDuration=120&search=promo&sortBy=durationInSeconds&sortOrder=asc
+```
+
+**Query Parameters:**
+- `page` (default: 1) - Page number
+- `limit` (default: 10) - Items per page
+- `search` (optional) - Search in name and link
+- `type` (optional) - Filter by type (video/image)
+- `minDuration` (optional) - Minimum duration in seconds
+- `maxDuration` (optional) - Maximum duration in seconds
+- `sortBy` (default: createdAt) - Field to sort by
+- `sortOrder` (default: desc) - Sort order
+
+#### Get Ad Statistics
+```http
+GET /api/ads/stats
+```
+
+#### Get Ad by ID
+```http
+GET /api/ads/64f8a1b2c3d4e5f6a7b8c9d0
+```
+
 ## Response Formats
 
 ### Success Response
@@ -334,6 +371,19 @@ interface IWithdrawalRequest {
 }
 ```
 
+### Ad Model
+```typescript
+interface IAd {
+  name: string;
+  videoUrl?: string;
+  imageUrl?: string;
+  link: string;
+  durationInSeconds: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+```
+
 ## Scheduled Jobs
 
 - **Auto update user balance every 24 hours**  
@@ -360,7 +410,8 @@ src/
 - **Deposit Management**: View all deposits, filter by status, approve/reject
 - **Withdrawal Management**: View all withdrawals, advanced search, approve/reject
 - **User Management**: Search users, get user details, view user statistics
-- **Statistics**: Real-time dashboard statistics for deposits and withdrawals
+- **Ad Management**: View all ads, filter by type and duration, get statistics
+- **Statistics**: Real-time dashboard statistics for deposits, withdrawals, and ads
 - **Advanced Search**: Multi-criteria search with date ranges and amount filters
 - **Pagination**: Efficient handling of large datasets
 - **Data Export**: Comprehensive data retrieval for reporting

@@ -1,23 +1,77 @@
 import { Request, Response } from 'express';
-import User from '../models/user.model';
+import UserModel from '../models/user.model';
 
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
-    // Get all users from database
-    const users = await User.find();
+    const { 
+      page = 1, 
+      limit = 10, 
+      search, 
+      plan, 
+      level,
+      sortBy = 'createdAt', 
+      sortOrder = 'desc' 
+    } = req.query;
 
-    // Return users array
+    // Build filter object
+    const filter: any = {};
+    
+    if (search) {
+      filter.$or = [
+        { name: { $regex: search, $options: 'i' } },
+        { email: { $regex: search, $options: 'i' } },
+        { phoneNumber: { $regex: search, $options: 'i' } }
+      ];
+    }
+
+    if (plan) {
+      filter.plan = plan;
+    }
+
+    if (level !== undefined) {
+      filter.level = Number(level);
+    }
+
+    // Build sort object
+    const sort: any = {};
+    sort[sortBy as string] = sortOrder === 'desc' ? -1 : 1;
+
+    // Calculate skip value for pagination
+    const skip = (Number(page) - 1) * Number(limit);
+
+    // Get total count for pagination
+    const totalUsers = await UserModel.countDocuments(filter);
+    const totalPages = Math.ceil(totalUsers / Number(limit));
+
+    // Get users with pagination and sorting, exclude password
+    const users = await UserModel
+      .find(filter)
+      .sort(sort)
+      .skip(skip)
+      .limit(Number(limit))
+      .select('-password -__v'); // Exclude password and version key
+
     res.status(200).json({
       success: true,
-      data: users
+      message: 'Users retrieved successfully',
+      data: {
+        users,
+        pagination: {
+          currentPage: Number(page),
+          totalPages,
+          totalUsers,
+          hasNextPage: Number(page) < totalPages,
+          hasPrevPage: Number(page) > 1
+        }
+      }
     });
 
   } catch (error: any) {
-    // Handle any errors
-    res.status(500).json({
-      success: false, 
-      message: 'Failed to fetch users',
-      error: error.message
+    console.error('Error fetching users:', error);
+    res.status(500).json({ 
+      success: false,
+      message: 'Failed to fetch users', 
+      error: error.message 
     });
   }
 };
@@ -35,7 +89,7 @@ export const deleteUser = async (req: Request, res: Response) => {
     }
 
     // Find and delete user
-    const deletedUser = await User.findOneAndDelete({ uid });
+    const deletedUser = await UserModel.findOneAndDelete({ uid });
 
     if (!deletedUser) {
       return res.status(404).json({
