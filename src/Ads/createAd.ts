@@ -19,8 +19,12 @@ export const createAd = async (req: Request, res: Response) => {
       });
     }
 
+    // Generate a unique adId to prevent duplicate key errors
+    const adId = `${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+
     // Create new ad
     const newAd = new AdModel({
+      adId, // Add the auto-generated unique adId
       name,
       videoUrl,
       imageUrl,

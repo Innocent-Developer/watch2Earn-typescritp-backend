@@ -6,6 +6,7 @@ export interface IAd extends Document {
   imageUrl?: string; 
   link: string;
   durationInSeconds: number;
+  adId:string;
 }
 
 const AdSchema: Schema = new Schema({
@@ -13,7 +14,8 @@ const AdSchema: Schema = new Schema({
   videoUrl: { type: String },
   imageUrl: { type: String },
   link: { type: String, required: true },
-  durationInSeconds: { type: Number, required: true }
+  durationInSeconds: { type: Number, required: true },
+  adId: { type: String, required: true }
 }, { timestamps: true });
 
 const AdModel = mongoose.model<IAd>('Ad', AdSchema);
