@@ -74,9 +74,9 @@ export const getAllAds = async (req: Request, res: Response) => {
 
   } catch (error: any) {
     console.error('Error fetching ads:', error);
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
-      message: 'Failed to fetch ads', 
+      message: 'Failed to fetch ads',
       error: error.message 
     });
   }

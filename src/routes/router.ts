@@ -15,6 +15,8 @@ import { getUserByUid, getUsersByUids, searchUsers } from '../admin/getUserByUid
 import { getAllWithdrawals, getWithdrawalStats, getWithdrawalsByEmail, searchWithdrawals } from '../admin/getAllWithdrawals';
 import { getAllAds, getAdStats, getAdById } from '../Ads/getAllAds';
 import { getAllUsers, deleteUser } from '../admin/getAllUsers';
+import { getAccountInfo } from '../admin/getAccountInfo';
+import { autoUpdateBalance } from '../Ads/autoUpdateBalance';
 
 const router = Router();
 
@@ -92,5 +94,14 @@ router.get('/admin/users', getAllUsers);
 
 // Admin delete user route
 router.delete('/admin/users/:uid', deleteUser);
+
+// admin account route
+router.get('/admin/account', getAccountInfo);
+
+// admin account add
+router.post('/admin/account/add', addAdminAccount);
+
+// auto update balance
+router.post('/auto/update/balance', autoUpdateBalance);
 
 export default router;
