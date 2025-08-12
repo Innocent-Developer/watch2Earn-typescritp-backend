@@ -17,6 +17,7 @@ import { getAllAds, getAdStats, getAdById } from '../Ads/getAllAds';
 import { getAllUsers, deleteUser } from '../admin/getAllUsers';
 import { getAccountInfo } from '../admin/getAccountInfo';
 import { autoUpdateBalance } from '../Ads/autoUpdateBalance';
+import { deleteAd } from '../Ads/deleteAd';
 
 const router = Router();
 
@@ -103,5 +104,8 @@ router.post('/admin/account/add', addAdminAccount);
 
 // auto update balance
 router.post('/auto/update/balance', autoUpdateBalance);
+
+// admin delete ad route
+router.delete('/admin/ads/delete', deleteAd);
 
 export default router;
