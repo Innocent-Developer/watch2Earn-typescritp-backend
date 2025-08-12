@@ -106,6 +106,6 @@ router.post('/admin/account/add', addAdminAccount);
 router.post('/auto/update/balance', autoUpdateBalance);
 
 // admin delete ad route
-router.post('/admin/ads/delete', deleteAd);
+router.post('/admin/ads/remove', deleteAd);
 
 export default router;
