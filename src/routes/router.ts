@@ -20,6 +20,7 @@ import { updateAdminAccount } from '../admin/updateAdminAccount';
 import { deleteAdminAccount, softDeleteAdminAccount } from '../admin/deleteAdminAccount';
 import { autoUpdateBalance } from '../Ads/autoUpdateBalance';
 import { deleteAd } from '../Ads/deleteAd';
+import { getUserWithdrawals, getUserDeposits, getUserReferrals, getUserCompleteData } from '../user/getUserData';
 
 const router = Router();
 
@@ -118,5 +119,18 @@ router.post('/auto/update/balance', autoUpdateBalance);
 
 // admin delete ad route
 router.post('/admin/content/delete', deleteAd);
+
+// User data routes
+// Get user withdrawals by email
+router.get('/user/withdrawals/:email', getUserWithdrawals);
+
+// Get user deposits by UID
+router.get('/user/deposits/:uid', getUserDeposits);
+
+// Get user referral information and invited users
+router.get('/user/referrals/:uid', getUserReferrals);
+
+// Get comprehensive user data (withdrawals, deposits, referrals)
+router.get('/user/complete/:uid', getUserCompleteData);
 
 export default router;
