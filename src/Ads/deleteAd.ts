@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import  Ad  from '../models/ad.model';
+import Ad from '../models/ad.model';
 
 export const deleteAd = async (req: Request, res: Response) => {
   try {
