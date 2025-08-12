@@ -16,6 +16,8 @@ import { getAllWithdrawals, getWithdrawalStats, getWithdrawalsByEmail, searchWit
 import { getAllAds, getAdStats, getAdById } from '../Ads/getAllAds';
 import { getAllUsers, deleteUser } from '../admin/getAllUsers';
 import { getAccountInfo } from '../admin/getAccountInfo';
+import { updateAdminAccount } from '../admin/updateAdminAccount';
+import { deleteAdminAccount, softDeleteAdminAccount } from '../admin/deleteAdminAccount';
 import { autoUpdateBalance } from '../Ads/autoUpdateBalance';
 import { deleteAd } from '../Ads/deleteAd';
 
@@ -101,6 +103,15 @@ router.get('/admin/account', getAccountInfo);
 
 // admin account add
 router.post('/admin/account/add', addAdminAccount);
+
+// admin account update
+router.put('/admin/account/:accountId', updateAdminAccount);
+
+// admin account delete (hard delete)
+router.delete('/admin/account/:accountId', deleteAdminAccount);
+
+// admin account soft delete (deactivate)
+router.patch('/admin/account/:accountId/deactivate', softDeleteAdminAccount);
 
 // auto update balance
 router.post('/auto/update/balance', autoUpdateBalance);
