@@ -6,6 +6,7 @@ export interface IAdminAccount extends Document {
   bankName: string;
   currency?: string;
   description?: string;
+  isActive: boolean;
 }
 
 const AdminAccountSchema: Schema = new Schema({
