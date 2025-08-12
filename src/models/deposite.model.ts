@@ -8,6 +8,7 @@ export interface IDeposite extends Document {
   senderPhone: string;
     uid?: Number; // Optional field for user ID
   status?: string; // Add status field
+  pic?: string;
 }
 
 const DepositeSchema: Schema = new Schema({
@@ -17,7 +18,8 @@ const DepositeSchema: Schema = new Schema({
   senderName: { type: String, required: true },
   senderPhone: { type: String, required: true },
     uid: { type: Number, required: false }, // Optional field for user ID
-  status: { type: String, default: 'pending' }
+  status: { type: String, default: 'pending' },
+  pic: { type: String, required: false }
 }, { timestamps: true });
 
 const DepositeModel = mongoose.model<IDeposite>('Deposite', DepositeSchema);

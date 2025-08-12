@@ -3,10 +3,10 @@ import DepositeModel from '../models/deposite.model';
 
 export const createDeposite = async (req: Request, res: Response) => {
   try {
-    const { amount, bankName, transactionId, senderName, senderPhone ,uid } = req.body;
+    const { amount, bankName, transactionId, senderName, senderPhone ,uid , pic } = req.body;
 
     // Validate required fields
-    if (!amount || !bankName || !transactionId || !senderName || !senderPhone) {
+    if (!amount || !bankName || !transactionId ) {
       return res.status(400).json({ message: 'All fields are required.' });
     }
 
