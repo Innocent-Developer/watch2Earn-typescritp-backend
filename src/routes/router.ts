@@ -21,6 +21,7 @@ import { deleteAdminAccount, softDeleteAdminAccount } from '../admin/deleteAdmin
 import { autoUpdateBalance } from '../Ads/autoUpdateBalance';
 import { deleteAd } from '../Ads/deleteAd';
 import { getUserWithdrawals, getUserDeposits, getUserReferrals, getUserCompleteData } from '../user/getUserData';
+import { getTeamMembers, getTeamMemberDetails, getTeamHierarchy } from '../team/getTeamMembers';
 
 const router = Router();
 
@@ -132,5 +133,15 @@ router.get('/user/referrals/:uid', getUserReferrals);
 
 // Get comprehensive user data (withdrawals, deposits, referrals)
 router.get('/user/complete/:uid', getUserCompleteData);
+
+// Team management routes
+// Get team members by invite code
+router.get('/team/members/:inviteCode', getTeamMembers);
+
+// Get specific team member details
+router.get('/team/member/:inviteCode/:uid', getTeamMemberDetails);
+
+// Get team hierarchy (multi-level structure)
+router.get('/team/hierarchy/:inviteCode', getTeamHierarchy);
 
 export default router;

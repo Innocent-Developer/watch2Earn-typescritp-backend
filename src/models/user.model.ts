@@ -14,6 +14,7 @@ export interface IUser extends Document {
   totalInvites: number;
   profilePicture?: string; // Optional field for profile picture  
   level: number;
+  createdAt: Date;
 }
 
 const UserSchema: Schema = new Schema({
