@@ -85,7 +85,7 @@ export const getTeamMemberDetails = async (req: Request, res: Response) => {
 
         // Find the specific team member
         const teamMember = await UserModel.findOne({
-            uid: Number(uid),
+            uid: uid,
             inviteCode: inviteCode
         }).select('name uid phoneNumber email plan totalBalance totalWithdrawals totalInvites level createdAt');
 

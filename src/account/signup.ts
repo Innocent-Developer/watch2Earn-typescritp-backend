@@ -32,11 +32,12 @@ export const signup = async (req: Request, res: Response) => {
     const referralCode = generateReferralCode();
     const uid = generateUid();
 
-    // If invite code used, increment inviter's totalInvites
+    // If invite code used, increment inviter's totalInvites and add 10 to their totalBalance
     if (inviteCode) {
       const inviter = await UserModel.findOne({ referralCode: inviteCode });
       if (inviter) {
         inviter.totalInvites += 1;
+        inviter.totalBalance += 10;
         await inviter.save();
       }
     }
