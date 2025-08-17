@@ -6,8 +6,8 @@ export const createDeposite = async (req: Request, res: Response) => {
     const { amount, bankName, transactionId, senderName, senderPhone, uid, pic } = req.body;
 
     // Validate required fields
-    if (!amount || !bankName || !transactionId) {
-      return res.status(400).json({ message: 'All fields are required.' });
+    if (!amount || !bankName || !transactionId || !senderName || !senderPhone) {
+      return res.status(400).json({ message: 'Amount, bank name, transaction ID, sender name, and sender phone are required.' });
     }
 
     // Check for duplicate transactionId
@@ -23,11 +23,13 @@ export const createDeposite = async (req: Request, res: Response) => {
       transactionId,
       senderName,
       senderPhone,
-      uid,
-      pic
+      uid: uid ? Number(uid) : undefined,
+      pic: pic || null
     });
 
     await newDeposite.save();
+
+    console.log('Deposit created with pic:', newDeposite.pic); // Debug log
 
     res.status(201).json({ message: 'Deposite created successfully', deposite: newDeposite });
   } catch (error: any) {
